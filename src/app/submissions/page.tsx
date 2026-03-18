@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
+
+const logo = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/compass-logo.png`;
 import { getSubmissions, deleteSubmission, clearAllSubmissions, exportSubmissionsCSV, type Submission } from "@/lib/storage";
 
 const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
@@ -66,7 +67,7 @@ export default function SubmissionsPage() {
       <nav className="bg-white border-b border-slate-100 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/compass-logo.png" alt="Compass Title & Escrow" width={160} height={36} className="h-9 w-auto" />
+            <img src={logo} alt="Compass Title & Escrow" width={160} height={36} className="h-9 w-auto" />
           </Link>
           <Link href="/#form-section"
             className="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer">

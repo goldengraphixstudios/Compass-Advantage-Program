@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+
+const logo = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/compass-logo.png`;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -22,7 +23,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/compass-logo.png" alt="Compass Title & Escrow, Ltd." width={220} height={60} className="h-12 sm:h-16 w-auto" priority />
+            <img src={logo} alt="Compass Title & Escrow, Ltd." width={220} height={60} className="h-12 sm:h-16 w-auto" fetchPriority="high" />
           </Link>
           <div className="hidden sm:flex items-center gap-6">
             <a href="#how-it-works" className="text-sm font-medium text-slate-600 hover:text-navy-600 transition-colors">

@@ -1,5 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
+
+const logo = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/compass-logo.png`;
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-12">
           <div>
-            <Image src="/compass-logo.png" alt="Compass Title & Escrow" width={200} height={50} className="h-12 w-auto mb-4" />
+            <img src={logo} alt="Compass Title & Escrow" width={200} height={50} className="h-12 w-auto mb-4" />
             <p className="text-blue-200/70 text-sm leading-relaxed">
               The Compass Advantage Program helps promote your listings through our established marketing channels.
             </p>

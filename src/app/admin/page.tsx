@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
+
+const logo = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/compass-logo.png`;
 import {
   getSubmissions,
   deleteSubmission,
@@ -138,7 +139,7 @@ export default function AdminPage() {
         style={{ background: "linear-gradient(135deg, #1B2A6B 0%, #2D4080 40%, #0098D1 100%)" }}>
         <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-8">
           <div className="text-center mb-8">
-            <Image src="/compass-logo.png" alt="Compass" width={200} height={60} className="h-14 w-auto mx-auto mb-6" />
+            <img src={logo} alt="Compass" width={200} height={60} className="h-14 w-auto mx-auto mb-6" />
             <h1 className="text-2xl font-bold text-navy-600" style={{ fontFamily: "var(--font-display)" }}>
               Admin Panel
             </h1>
@@ -180,7 +181,7 @@ export default function AdminPage() {
       <nav className="bg-white border-b border-slate-100 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <div className="flex items-center gap-4">
-            <Image src="/compass-logo.png" alt="Compass" width={140} height={40} className="h-9 w-auto" />
+            <img src={logo} alt="Compass" width={140} height={40} className="h-9 w-auto" />
             <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-navy-50 text-navy-600 text-xs font-semibold">
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />

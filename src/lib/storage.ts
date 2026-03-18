@@ -90,6 +90,9 @@ async function uploadPhoto(submissionId: string, folder: string, name: string, d
 // ── CRUD operations ──
 
 export async function getSubmissions(): Promise<Submission[]> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder")) {
+    return [];
+  }
   const { data, error } = await supabase
     .from("submissions")
     .select("*")
