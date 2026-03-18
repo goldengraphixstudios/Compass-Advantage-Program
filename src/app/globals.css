@@ -1,26 +1,154 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy-50: #E8EAF2;
+  --color-navy-100: #C5CAE0;
+  --color-navy-200: #9BA3C8;
+  --color-navy-300: #707CB0;
+  --color-navy-400: #4E5E9D;
+  --color-navy-500: #2D4080;
+  --color-navy-600: #1B2A6B;
+  --color-navy-700: #152256;
+  --color-navy-800: #101A41;
+  --color-navy-900: #0A112C;
+
+  --color-cyan-50: #E5F7FD;
+  --color-cyan-100: #B3E8F9;
+  --color-cyan-200: #80D9F5;
+  --color-cyan-300: #4DCAF1;
+  --color-cyan-400: #26BEEF;
+  --color-cyan-500: #00AEEF;
+  --color-cyan-600: #0098D1;
+  --color-cyan-700: #007DB0;
+  --color-cyan-800: #00638C;
+  --color-cyan-900: #004A69;
+
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Loading screen ── */
+@keyframes compass-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes compass-needle {
+  0%, 100% { transform: rotate(-15deg); }
+  50% { transform: rotate(15deg); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 0; }
+  100% { transform: scale(0.8); opacity: 0; }
+}
+@keyframes loading-bar {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes screen-exit {
+  to { opacity: 0; transform: scale(1.02); pointer-events: none; }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-compass-spin { animation: compass-spin 3s linear infinite; }
+.animate-compass-needle { animation: compass-needle 2s ease-in-out infinite; transform-origin: 50% 85%; }
+.animate-fade-up { animation: fade-up 0.6s ease forwards; }
+.animate-pulse-ring { animation: pulse-ring 2s ease-in-out infinite; }
+.animate-loading-bar { animation: loading-bar 1.8s ease-in-out infinite; }
+.animate-screen-exit { animation: screen-exit 0.5s ease forwards; }
+
+/* ── Form & UI ── */
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+.animate-fade-slide-in { animation: fade-slide-in 0.4s ease forwards; }
+
+@keyframes check-draw {
+  from { stroke-dashoffset: 50; }
+  to { stroke-dashoffset: 0; }
+}
+.animate-check-draw {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: check-draw 0.6s ease forwards 0.3s;
+}
+
+@keyframes scale-in {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.animate-scale-in { animation: scale-in 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+@keyframes toast-in {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-toast-in { animation: toast-in 0.3s ease; }
+
+/* ── Step dots ── */
+.step-dot {
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.step-dot-active {
+  background: var(--color-cyan-500);
+  box-shadow: 0 0 0 4px rgba(0,174,239,0.2);
+  color: white;
+}
+.step-dot-completed {
+  background: var(--color-navy-600);
+  color: white;
+}
+
+/* ── Input focus ── */
+.form-input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-input:focus {
+  border-color: var(--color-cyan-500);
+  box-shadow: 0 0 0 3px rgba(0,174,239,0.15);
+  outline: none;
+}
+.form-input-error {
+  border-color: #DC2626 !important;
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.1) !important;
+}
+
+/* ── Radio / Checkbox custom ── */
+.custom-radio:checked {
+  border-color: var(--color-cyan-500);
+  box-shadow: inset 0 0 0 4px var(--color-cyan-500);
+}
+.custom-check:checked {
+  background-color: var(--color-cyan-500);
+  border-color: var(--color-cyan-500);
+}
+
+/* ── File drop ── */
+.file-drop:hover, .file-drop-active {
+  border-color: var(--color-cyan-500);
+  background: rgba(0,174,239,0.04);
+}
+
+/* ── Photo thumb ── */
+.photo-thumb .remove-btn { opacity: 0; transition: opacity 0.2s; }
+.photo-thumb:hover .remove-btn { opacity: 1; }
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: all 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── General ── */
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); }
