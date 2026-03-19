@@ -250,11 +250,11 @@ export default function Hero() {
       </div>
 
       {/* Logo Stamp (right side) */}
-      <div className="absolute right-8 lg:right-16 xl:right-24 top-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center pointer-events-none">
+      <div className="absolute -right-4 lg:-right-2 xl:right-6 top-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center pointer-events-none">
         <img
           src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo-stamp.png`}
           alt="Compass Advantage"
-          className="w-[340px] xl:w-[420px] h-auto opacity-90 drop-shadow-[0_0_40px_rgba(0,174,239,0.25)]"
+          className="w-[340px] xl:w-[420px] h-auto opacity-40 drop-shadow-[0_0_40px_rgba(0,174,239,0.2)]"
         />
       </div>
     </section>
