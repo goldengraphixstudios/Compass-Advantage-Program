@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-12">
           <div>
-            <img src={logo} alt="Compass Title & Escrow" width={200} height={50} className="h-12 w-auto mb-4" />
+            <img src={logo} alt="Compass Title & Escrow" width={200} height={50} className="h-12 w-auto mb-4 brightness-0 invert" />
             <p className="text-blue-200/70 text-sm leading-relaxed">
               The Compass Advantage Program helps promote your listings through our established marketing channels.
             </p>
@@ -18,7 +18,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-blue-200/70">
               <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
               <li><a href="#form-section" className="hover:text-white transition-colors">Submit a Listing</a></li>
-              <li><Link href="/submissions" className="hover:text-white transition-colors">View Submissions</Link></li>
+              <li><Link href="/submissions" className="hover:text-white transition-colors">Track Submission</Link></li>
             </ul>
           </div>
           <div>

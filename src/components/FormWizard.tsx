@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { saveSubmission, saveDraft, loadDraft, clearDraft, generateId } from "@/lib/storage";
+import { saveSubmission, saveDraft, loadDraft, clearDraft, generateId, generateTicket } from "@/lib/storage";
 import ContactStep from "./steps/ContactStep";
 import PropertyStep from "./steps/PropertyStep";
 import OpenHouseStep from "./steps/OpenHouseStep";
@@ -57,6 +57,7 @@ export default function FormWizard() {
   const [propertyPhotos, setPropertyPhotos] = useState<{ name: string; data: string }[]>([]);
   const [headshot, setHeadshot] = useState<{ name: string; data: string } | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [ticketCode, setTicketCode] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [draftSaved, setDraftSaved] = useState(false);
@@ -158,15 +159,18 @@ export default function FormWizard() {
     setIsSubmitting(true);
     setSubmitError("");
     try {
+      const ticket = generateTicket();
       await saveSubmission({
         ...data,
         propertyPhotos,
         headshot,
         submittedAt: new Date().toISOString(),
         id: generateId(),
+        ticket,
         status: "new",
       });
       clearDraft();
+      setTicketCode(ticket);
       setSubmitted(true);
     } catch (err) {
       console.error("Submit error:", err);
@@ -186,7 +190,7 @@ export default function FormWizard() {
     document.getElementById("form-section")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  if (submitted) return <SuccessScreen onReset={handleReset} />;
+  if (submitted) return <SuccessScreen onReset={handleReset} ticket={ticketCode} />;
 
   return (
     <section id="form-section" className="py-20 sm:py-28 relative" ref={sectionRef}>

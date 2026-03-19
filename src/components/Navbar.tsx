@@ -33,7 +33,7 @@ export default function Navbar() {
               Submit a Listing
             </a>
             <Link href="/submissions" className="text-sm font-medium text-slate-600 hover:text-navy-600 transition-colors">
-              Submissions
+              Track Submission
             </Link>
             <a
               href="#form-section"

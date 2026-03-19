@@ -2,6 +2,7 @@ import { supabase } from "./supabase";
 
 export interface Submission {
   id: string;
+  ticket: string;
   agentName: string;
   agentEmail: string;
   agentPhone: string;
@@ -44,6 +45,7 @@ const camelToSnake: Record<string, string> = {
   specialInstructions: "special_instructions", needSocialHelp: "need_social_help",
   hasPhotos: "has_photos", additionalNotes: "additional_notes",
   propertyPhotos: "property_photos", submittedAt: "submitted_at",
+  ticket: "ticket",
 };
 
 const snakeToCamel: Record<string, string> = Object.fromEntries(
@@ -103,6 +105,7 @@ export async function getSubmissions(): Promise<Submission[]> {
 
 export async function saveSubmission(input: {
   id: string;
+  ticket: string;
   agentName: string; agentEmail: string; agentPhone: string;
   brokerageName: string; mlsNumber: string;
   propertyAddress: string; listingPrice: string; propertyType: string;
@@ -188,7 +191,7 @@ export function exportSubmissionsCSV(submissions: Submission[]): void {
   if (submissions.length === 0) return;
 
   const headers = [
-    "Agent Name", "Email", "Phone", "Brokerage", "MLS #",
+    "Ticket", "Agent Name", "Email", "Phone", "Brokerage", "MLS #",
     "Property Address", "Price", "Type", "Bedrooms", "Bathrooms",
     "Sq Ft", "Lot Size", "Year Built", "Key Features", "Open House Date",
     "Start Time", "End Time", "Agent Present", "Special Instructions",
@@ -196,7 +199,7 @@ export function exportSubmissionsCSV(submissions: Submission[]): void {
   ];
 
   const rows = submissions.map((s) => [
-    s.agentName, s.agentEmail, s.agentPhone, s.brokerageName, s.mlsNumber,
+    s.ticket, s.agentName, s.agentEmail, s.agentPhone, s.brokerageName, s.mlsNumber,
     s.propertyAddress, s.listingPrice, s.propertyType, s.bedrooms, s.bathrooms,
     s.sqft, s.lotSize, s.yearBuilt, s.keyFeatures, s.openHouseDates,
     s.startTime, s.endTime, s.agentPresent, s.specialInstructions,
@@ -236,4 +239,25 @@ export function clearDraft(): void {
 
 export function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+export function generateTicket(): string {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = "";
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return `CAP-${code}`;
+}
+
+export async function getSubmissionByTicket(ticket: string): Promise<Submission | null> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder")) {
+    return null;
+  }
+  const { data, error } = await supabase
+    .from("submissions")
+    .select("*")
+    .eq("ticket", ticket.toUpperCase().trim())
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) return null;
+  return fromDbRow(data as Record<string, unknown>);
 }
