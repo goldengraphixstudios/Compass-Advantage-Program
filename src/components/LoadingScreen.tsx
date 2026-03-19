@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
+const logoStamp = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo-stamp.png`;
+
 interface Particle {
   x: number;
   y: number;
@@ -25,7 +27,7 @@ export default function LoadingScreen() {
   // Particle system
   const initParticles = useCallback((w: number, h: number) => {
     const particles: Particle[] = [];
-    const count = Math.floor((w * h) / 8000); // density based on screen
+    const count = Math.floor((w * h) / 8000);
     for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * w,
@@ -127,7 +129,7 @@ export default function LoadingScreen() {
         }
       }
 
-      // Floating sparkles (larger, slower, glowing)
+      // Floating sparkles
       for (let i = 0; i < 5; i++) {
         const sparkleX = w * (0.15 + 0.7 * ((Math.sin(time * 0.003 + i * 1.5) + 1) / 2));
         const sparkleY = h * (0.2 + 0.6 * ((Math.cos(time * 0.004 + i * 2.1) + 1) / 2));
@@ -190,60 +192,22 @@ export default function LoadingScreen() {
       {/* Particle canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
-      {/* Radial glow behind compass */}
-      <div className="absolute w-64 h-64 rounded-full opacity-20"
+      {/* Radial glow behind logo */}
+      <div className="absolute w-80 h-80 rounded-full opacity-25"
         style={{ background: "radial-gradient(circle, rgba(0,174,239,0.4) 0%, transparent 70%)" }} />
 
-      {/* Pulse rings */}
-      <div className="absolute w-36 h-36 rounded-full border border-cyan-400/20 animate-pulse-ring" />
-      <div className="absolute w-52 h-52 rounded-full border border-white/5 animate-pulse-ring" style={{ animationDelay: "0.8s" }} />
-
-      {/* Compass icon */}
-      <div className="relative w-28 h-28 mb-8 z-10">
-        {/* Outer ring - spins */}
-        <svg className="w-full h-full animate-compass-spin" viewBox="0 0 100 100" fill="none">
-          <circle cx="50" cy="50" r="46" stroke="url(#ringGrad)" strokeWidth="1.5" opacity="0.5" />
-          <circle cx="50" cy="50" r="38" stroke="white" strokeWidth="0.5" opacity="0.15" />
-          <defs>
-            <linearGradient id="ringGrad" x1="0" y1="0" x2="100" y2="100">
-              <stop offset="0%" stopColor="#00AEEF" />
-              <stop offset="100%" stopColor="white" stopOpacity="0.3" />
-            </linearGradient>
-          </defs>
-          {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
-            <line key={deg} x1="50" y1="6" x2="50" y2={deg % 90 === 0 ? "14" : "10"}
-              stroke={deg % 90 === 0 ? "#00AEEF" : "white"}
-              strokeWidth={deg % 90 === 0 ? "2" : "1"}
-              opacity={deg % 90 === 0 ? "0.8" : "0.25"}
-              transform={`rotate(${deg} 50 50)`} />
-          ))}
-        </svg>
-
-        {/* Needle */}
-        <svg className="absolute inset-0 w-full h-full animate-compass-needle" viewBox="0 0 100 100" fill="none">
-          <path d="M50 16 L44 47 L50 50 L56 47 Z" fill="#00AEEF" opacity="0.9" />
-          <path d="M50 84 L44 53 L50 50 L56 53 Z" fill="white" opacity="0.25" />
-          <circle cx="50" cy="50" r="4" fill="white" opacity="0.9" />
-          <circle cx="50" cy="50" r="2" fill="#00AEEF" />
-        </svg>
-
-        {/* Glow behind needle tip */}
-        <div className="absolute top-1 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-cyan-400/30 blur-md animate-pulse" />
-      </div>
-
-      {/* Text */}
-      <div className="text-center z-10 animate-fade-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-wider mb-1.5"
-          style={{ fontFamily: "var(--font-display)" }}>
-          COMPASS
-        </h1>
-        <p className="text-cyan-300/80 text-sm tracking-[0.25em] uppercase font-medium">
-          Advantage Program
-        </p>
+      {/* Logo Stamp */}
+      <div className="relative z-10 mb-10 animate-fade-up" style={{ opacity: 0, animationDelay: "0.1s" }}>
+        <img
+          src={logoStamp}
+          alt="Compass Advantage"
+          className="w-52 h-52 sm:w-64 sm:h-64 object-contain drop-shadow-[0_0_30px_rgba(0,174,239,0.3)]"
+          fetchPriority="high"
+        />
       </div>
 
       {/* Progress bar */}
-      <div className="mt-10 w-52 z-10 animate-fade-up" style={{ animationDelay: "0.4s", opacity: 0 }}>
+      <div className="w-52 z-10 animate-fade-up" style={{ animationDelay: "0.3s", opacity: 0 }}>
         <div className="h-1 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
           <div
             className="h-full rounded-full transition-all duration-200 ease-out"
