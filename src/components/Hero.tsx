@@ -249,16 +249,13 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Decorative compass (large, faded) */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] opacity-[0.05] hidden lg:block pointer-events-none">
-        <svg viewBox="0 0 200 200" fill="none">
-          <circle cx="100" cy="100" r="90" stroke="white" strokeWidth="1.5" />
-          <circle cx="100" cy="100" r="70" stroke="white" strokeWidth="1" />
-          <path d="M100 10 L105 95 L100 100 L95 95Z" fill="white" opacity="0.8" />
-          <path d="M100 190 L105 105 L100 100 L95 105Z" fill="white" opacity="0.4" />
-          <path d="M10 100 L95 95 L100 100 L95 105Z" fill="white" opacity="0.4" />
-          <path d="M190 100 L105 95 L100 100 L105 105Z" fill="white" opacity="0.4" />
-        </svg>
+      {/* Logo Stamp (right side) */}
+      <div className="absolute right-8 lg:right-16 xl:right-24 top-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center pointer-events-none">
+        <img
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo-stamp.png`}
+          alt="Compass Advantage"
+          className="w-[340px] xl:w-[420px] h-auto opacity-90 drop-shadow-[0_0_40px_rgba(0,174,239,0.25)]"
+        />
       </div>
     </section>
   );
