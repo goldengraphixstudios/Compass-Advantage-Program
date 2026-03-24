@@ -193,20 +193,29 @@ export default function FormWizard() {
   if (submitted) return <SuccessScreen onReset={handleReset} ticket={ticketCode} />;
 
   return (
-    <section id="form-section" className="py-20 sm:py-28 relative" ref={sectionRef}>
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 to-slate-100/50" />
+    <section id="form-section" className="py-20 sm:py-28 relative overflow-hidden" ref={sectionRef}>
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50 to-slate-100/80" />
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundImage: "radial-gradient(circle at 1px 1px, #1B2A6B 1px, transparent 0)",
+        backgroundSize: "40px 40px"
+      }} />
+
       <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center mb-12 reveal">
-          <h2 className="text-3xl sm:text-4xl font-bold text-navy-600 mb-4" style={{ fontFamily: "var(--font-display)" }}>
+        <div className="text-center mb-14 reveal">
+          <span className="inline-block text-sm font-semibold text-cyan-600 bg-cyan-50 rounded-full px-4 py-1.5 mb-4 tracking-wide">
+            SUBMIT YOUR LISTING
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-600 mb-4" style={{ fontFamily: "var(--font-display)" }}>
             Listing Submission Form
           </h2>
-          <p className="text-slate-500 text-lg">
-            Complete the form below to submit your listing to the Compass Advantage Program
+          <p className="text-slate-500 text-lg max-w-xl mx-auto">
+            Complete the form below to get your listing featured on Compass social media channels
           </p>
         </div>
 
         {/* Progress */}
-        <div className="mb-10 reveal">
+        <div className="mb-10 reveal" style={{ transitionDelay: "100ms" }}>
           <div className="flex items-center justify-between max-w-xl mx-auto px-4">
             {STEP_LABELS.map((label, i) => (
               <div key={label} className="contents">
@@ -224,7 +233,7 @@ export default function FormWizard() {
                 </button>
                 {i < TOTAL_STEPS - 1 && (
                   <div className={`flex-1 h-0.5 mx-2 transition-colors duration-400 ${
-                    i < currentStep ? "bg-navy-600" : "bg-slate-200"
+                    i < currentStep ? "bg-gradient-to-r from-navy-600 to-cyan-500" : "bg-slate-200"
                   }`} />
                 )}
               </div>
@@ -233,7 +242,7 @@ export default function FormWizard() {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-2xl shadow-lg shadow-slate-200/60 border border-slate-100 overflow-hidden">
+        <div className="reveal bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden" style={{ transitionDelay: "200ms" }}>
           <div className="p-6 sm:p-10">
             {currentStep === 0 && <ContactStep data={data} errors={errors} onChange={handleChange} />}
             {currentStep === 1 && <PropertyStep data={data} errors={errors} onChange={handleChange} />}
@@ -251,7 +260,10 @@ export default function FormWizard() {
           </div>
 
           {submitError && (
-            <div className="mx-6 sm:mx-10 mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
+            <div className="mx-6 sm:mx-10 mb-4 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-600 text-sm flex items-center gap-3">
+              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
               {submitError}
             </div>
           )}
@@ -260,8 +272,8 @@ export default function FormWizard() {
           <div className="px-6 sm:px-10 pb-6 sm:pb-10 flex items-center justify-between gap-4">
             {currentStep > 0 ? (
               <button type="button" onClick={() => changeStep(-1)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium transition-colors cursor-pointer">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium transition-all duration-200 cursor-pointer hover:border-slate-300">
+                <svg className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
                 Back
@@ -270,15 +282,15 @@ export default function FormWizard() {
 
             {currentStep < TOTAL_STEPS - 1 ? (
               <button type="button" onClick={() => changeStep(1)}
-                className="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-white px-8 py-3 rounded-xl text-sm font-semibold transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-cyan-500/30 cursor-pointer">
+                className="group inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-cyan-500/25 cursor-pointer">
                 Next Step
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
             ) : (
               <button type="button" onClick={handleSubmit} disabled={isSubmitting}
-                className="inline-flex items-center gap-2 bg-navy-600 hover:bg-navy-500 text-white px-8 py-3 rounded-xl text-sm font-semibold transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy-600/30 cursor-pointer disabled:opacity-60 disabled:pointer-events-none">
+                className="group inline-flex items-center gap-2 bg-gradient-to-r from-navy-600 to-navy-500 hover:from-navy-500 hover:to-navy-400 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy-600/25 cursor-pointer disabled:opacity-60 disabled:pointer-events-none">
                 {isSubmitting ? (
                   <>
                     <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
