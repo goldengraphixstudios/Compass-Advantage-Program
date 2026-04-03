@@ -29,12 +29,12 @@ export default function Hero() {
         x: Math.random() * w,
         y: Math.random() * h,
         vx: (Math.random() - 0.5) * 0.4,
-        vy: -Math.random() * 0.3 - 0.05, // gentle upward float
+        vy: -Math.random() * 0.3 - 0.05,
         size: Math.random() * 2.5 + 0.5,
         opacity: Math.random() * 0.5 + 0.05,
         fadeDir: Math.random() > 0.5 ? 1 : -1,
         type: types[Math.floor(Math.random() * types.length)],
-        hue: Math.random(), // 0-0.4 = white, 0.4-0.7 = cyan, 0.7-1 = light blue
+        hue: Math.random(),
       });
     }
     particlesRef.current = particles;
@@ -76,7 +76,6 @@ export default function Hero() {
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Mouse attraction (gentle pull)
         const dx = mx - p.x;
         const dy = my - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
@@ -90,24 +89,20 @@ export default function Hero() {
         p.vx *= 0.99;
         p.vy *= 0.99;
 
-        // Fade
         p.opacity += p.fadeDir * 0.004;
         if (p.opacity > 0.55) { p.fadeDir = -1; }
         if (p.opacity < 0.03) { p.fadeDir = 1; }
 
-        // Wrap
         if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
         if (p.x < -10) p.x = w + 10;
         if (p.x > w + 10) p.x = -10;
         if (p.y > h + 10) p.y = -10;
 
-        // Color
         let color: string;
         if (p.hue < 0.4) color = `rgba(255, 255, 255, ${p.opacity})`;
         else if (p.hue < 0.7) color = `rgba(0, 174, 239, ${p.opacity})`;
         else color = `rgba(77, 202, 241, ${p.opacity})`;
 
-        // Draw shape
         ctx.fillStyle = color;
         ctx.strokeStyle = color;
 
@@ -121,7 +116,6 @@ export default function Hero() {
           ctx.lineWidth = 0.6;
           ctx.stroke();
         } else {
-          // Diamond
           ctx.save();
           ctx.translate(p.x, p.y);
           ctx.rotate(time * 0.01 + i);
@@ -136,7 +130,6 @@ export default function Hero() {
           ctx.restore();
         }
 
-        // Connection lines
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const d = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
@@ -151,7 +144,6 @@ export default function Hero() {
         }
       }
 
-      // Floating orbs (ambient glow)
       for (let i = 0; i < 4; i++) {
         const ox = w * (0.1 + 0.8 * ((Math.sin(time * 0.002 + i * 1.8) + 1) / 2));
         const oy = h * (0.15 + 0.7 * ((Math.cos(time * 0.003 + i * 2.3) + 1) / 2));
@@ -181,7 +173,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative overflow-hidden min-h-[600px] sm:min-h-[700px] flex items-center"
+      className="relative overflow-hidden min-h-[640px] sm:min-h-[740px] flex items-center"
       style={{ background: "linear-gradient(135deg, #1B2A6B 0%, #2D4080 40%, #0098D1 100%)" }}
     >
       {/* Particle canvas */}
@@ -192,7 +184,26 @@ export default function Hero() {
         style={{ backgroundImage: "radial-gradient(ellipse at 20% 80%, rgba(0,174,239,0.12) 0%, transparent 50%), radial-gradient(ellipse at 85% 15%, rgba(0,174,239,0.08) 0%, transparent 45%)" }}
       />
 
+      {/* Logo Stamp — right side, prominent on desktop */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center pointer-events-none"
+           style={{ right: "-2%" }}>
+        <img
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo-stamp.png`}
+          alt="Compass Advantage"
+          className="w-[560px] xl:w-[680px] h-auto drop-shadow-[0_0_80px_rgba(0,174,239,0.35)]"
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-36 sm:pb-24 relative z-10 w-full">
+        {/* Mobile logo — visible only on small screens */}
+        <div className="flex lg:hidden justify-center mb-8">
+          <img
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo-stamp.png`}
+            alt="Compass Advantage"
+            className="w-44 sm:w-52 h-auto drop-shadow-[0_0_30px_rgba(0,174,239,0.4)]"
+          />
+        </div>
+
         <div className="max-w-3xl">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
@@ -201,7 +212,7 @@ export default function Hero() {
           </div>
 
           <h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
             The Compass<br />
@@ -209,7 +220,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-lg sm:text-xl text-blue-100/90 leading-relaxed mb-8 max-w-2xl">
-            Promote your listings and open houses through Compass&rsquo; established marketing channels.
+            Promote your listings and open houses across all of the Compass social media channels.
             Submit your details and reach more potential buyers within 2&ndash;3 business days.
           </p>
 
@@ -247,15 +258,6 @@ export default function Hero() {
             <div className="text-sm text-blue-200/70 mt-1">For Agents</div>
           </div>
         </div>
-      </div>
-
-      {/* Logo Stamp (right side) */}
-      <div className="absolute -right-4 lg:-right-2 xl:right-6 top-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center pointer-events-none">
-        <img
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo-stamp.png`}
-          alt="Compass Advantage"
-          className="w-[340px] xl:w-[420px] h-auto opacity-40 drop-shadow-[0_0_40px_rgba(0,174,239,0.2)]"
-        />
       </div>
     </section>
   );

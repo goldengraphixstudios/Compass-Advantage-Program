@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-const logo = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/compass-logo.png`;
+const compassLogo = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/compass-logo.png`;
+const logoStamp = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/logo-stamp.png`;
 
 export default function Footer() {
   return (
@@ -8,9 +9,22 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-12">
           <div>
-            <img src={logo} alt="Compass Title & Escrow" width={200} height={50} className="h-12 w-auto mb-4 brightness-0 invert" />
+            {/* Logos displayed prominently */}
+            <div className="flex items-center gap-5 mb-5">
+              <img
+                src={compassLogo}
+                alt="Compass Title & Escrow, Ltd."
+                className="h-20 w-auto brightness-0 invert"
+              />
+              <div className="w-px h-14 bg-white/20" />
+              <img
+                src={logoStamp}
+                alt="Compass Advantage"
+                className="h-20 w-auto brightness-0 invert opacity-80"
+              />
+            </div>
             <p className="text-blue-200/70 text-sm leading-relaxed">
-              The Compass Advantage Program helps promote your listings through our established marketing channels.
+              The Compass Advantage Program helps promote your listings through the Compass established marketing channels.
             </p>
           </div>
           <div>

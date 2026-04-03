@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,15 +8,16 @@ const inter = Inter({
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const playfair = Plus_Jakarta_Sans({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
+  weight: ["500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   title: "Compass Advantage Program | Compass Title & Escrow, Ltd.",
-  description: "Promote your listings and open houses through Compass' established marketing channels. Submit your details and reach more potential buyers.",
+  description: "Promote your listings and open houses through the Compass established marketing channels. Submit your details and reach more potential buyers.",
 };
 
 export default function RootLayout({
