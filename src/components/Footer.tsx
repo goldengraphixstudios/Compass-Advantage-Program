@@ -10,17 +10,16 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-12">
           <div>
             {/* Logos displayed prominently */}
-            <div className="flex items-center gap-5 mb-5">
+            <div className="-ml-6 flex items-center -space-x-6 mb-6">
               <img
                 src={compassLogo}
                 alt="Compass Title & Escrow, Ltd."
-                className="h-20 w-auto brightness-0 invert"
+                className="h-36 w-auto brightness-0 invert"
               />
-              <div className="w-px h-14 bg-white/20" />
               <img
                 src={logoStamp}
                 alt="Compass Advantage"
-                className="h-20 w-auto brightness-0 invert opacity-80"
+                className="h-36 w-auto brightness-0 invert"
               />
             </div>
             <p className="text-blue-200/70 text-sm leading-relaxed">

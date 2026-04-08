@@ -194,7 +194,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-36 sm:pb-24 relative z-10 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pt-44 sm:pb-24 relative z-10 w-full">
         {/* Mobile logo — visible only on small screens */}
         <div className="flex lg:hidden justify-center mb-8">
           <img
